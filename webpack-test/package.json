@@ -1,0 +1,14 @@
+{
+  "name": "webpack-fullhash-comparison",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "webpack": "latest",
+    "webpack-cli": "latest",
+    "mini-css-extract-plugin": "latest",
+    "css-loader": "latest"
+  }
+}
