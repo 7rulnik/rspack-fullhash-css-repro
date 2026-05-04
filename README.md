@@ -22,6 +22,15 @@ npm install
 ./reproduce.sh
 ```
 
+### Webpack behaves the same way
+
+`webpack-minimizer-test/` runs the identical scenario against `webpack@5`. Result: webpack also keeps `[fullhash]` stable while the CSS bytes (and `[contenthash]`) change. So this is **not an Rspack-specific bug** — it's how both pipelines work: `[fullhash]` is computed during `seal`, *before* `processAssets`-stage minimizers run. `realContentHash: true` rewrites asset filename `[contenthash]` post-hoc, but does not revisit `[fullhash]`.
+
+Practical implications:
+- A non-deterministic minimizer ships divergent bytes under a stable `[fullhash]` on both engines.
+- For cache invalidation that tracks final bytes, use per-chunk `[contenthash]` (with `realContentHash: true`), not `[fullhash]`.
+- The robust fix is to make the minimizer deterministic (e.g. stable input ordering).
+
 ## Proof: Webpack Comparison
 
 This repository includes both:

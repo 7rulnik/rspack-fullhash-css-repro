@@ -1,0 +1,15 @@
+{
+  "name": "webpack-minimizer-nondeterminism-comparison",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Webpack counterpart for the non-deterministic CSS minimizer scenario",
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "webpack": "latest",
+    "webpack-cli": "latest",
+    "mini-css-extract-plugin": "latest",
+    "css-loader": "latest"
+  }
+}
