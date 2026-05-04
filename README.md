@@ -10,6 +10,18 @@ When CSS content changes but JavaScript remains unchanged:
 
 This causes different build outputs to have identical fullhashes, breaking cache invalidation.
 
+> **Status (2026-05-04):** [#13491](https://github.com/web-infra-dev/rspack/pull/13491) (in `@rspack/core` ≥ `2.0.0-rc.2`) fixes the source-change scenario above — `rspack-test/` now passes on `2.0.1`. A second scenario remains, see below.
+
+## Scenario 2 — Non-deterministic CSS minimizer
+
+`rspack-minimizer-test/` covers a related case still observable on `2.0.1`: with a non-deterministic CSS minimizer (e.g. `lightningcss` invoked with unstable `unusedSymbols` ordering), two builds of identical source produce **different on-disk bytes** but identical compilation `[fullhash]`. The CSS asset filename `[contenthash]` does update (via `realContentHash`), but the JS `[fullhash]` does not — so the build artefact is divergent under a stable fullhash.
+
+```bash
+cd rspack-minimizer-test
+npm install
+./reproduce.sh
+```
+
 ## Proof: Webpack Comparison
 
 This repository includes both:
